@@ -1,0 +1,55 @@
+Report Summary
+
+No changes made. This is a read-only snapshot of current project settings.
+JavaScript / React Native
+
+React Native: 0.78.2 in package.json.
+React: 19.0.0 in package.json.
+Node engines: >=18 in package.json.
+File: package.json
+iOS Project Settings
+
+iOS deployment target (CocoaPods): 16.0 in Podfile.
+File: Podfile (line 9)
+iOS deployment targets (Xcode project): both 16 and 15.1 appear in the Xcode project.
+File: project.pbxproj
+Lines: 852, 884, 1095, 1129, 1167, 1204 → 16
+Lines: 964, 1050 → 15.1
+Swift version: 5.0 in multiple build configs.
+File: project.pbxproj
+Lines: 867, 898, 1110, 1143, 1183, 1219
+App version / build number (multiple targets):
+MARKETING_VERSION = 1.2.1 with CURRENT_PROJECT_VERSION = 1
+MARKETING_VERSION = 1.2.2 with CURRENT_PROJECT_VERSION = 3
+File: project.pbxproj
+Lines: 846–899, 1089–1134, 1158–1219
+Bundle IDs:
+com.nets.netsbiz
+com.nets.netsbiz.sit
+com.nets.netsbiz.staging
+File: project.pbxproj
+Lines: 863, 895, 1106, 1140, 1178, 1215
+Code signing style:
+Automatic for main/sit targets
+Manual for staging targets
+File: project.pbxproj
+Lines: 846, 879, 1089, 1124, 1158, 1197
+Team ID: 2YU75YNV6V
+File: project.pbxproj
+Lines: 848, 881, 1091, 1126, 1161–1162, 1199–1200
+CocoaPods / Native iOS
+
+Hermes prebuilt tarball pinned to RN 0.78.2.
+File: netsbiz_ios/ios/Podfile
+Lines: 16–23
+use_frameworks! :linkage => :static and Firebase static frameworks enabled.
+File: netsbiz_ios/ios/Podfile
+Lines: 12–14
+Firebase version pinned: 11.11.0.
+File: netsbiz_ios/ios/Podfile
+Line: 26
+ML Kit pinned: FirebaseMLModelDownloader 11.11.0-beta, GoogleMLKit/BarcodeScanning 8.0.0.
+File: netsbiz_ios/ios/Podfile
+Lines: 42–44
+Android
+
