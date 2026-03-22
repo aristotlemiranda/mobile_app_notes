@@ -35,3 +35,7 @@ watchOS Simulator SDKs:
         Simulator - watchOS 26.0        -sdk watchsimulator26.0
 
 aristotlemiranda@Mac netsbiz_ios % 
+
+aristotlemiranda@Mac ios % rbenv exec bundle exec pod --version
+1.15.2
+aristotlemiranda@Mac ios % 
