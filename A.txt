@@ -1,0 +1,95 @@
+package com.nets.netsbiz.qri.core.domain;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+public class SnsPayloadBuilder {
+
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    public SnsEnvelope buildEnvelope(
+        String title,
+        String alertBody,
+        MobTransaction mobTransaction,
+        String channelId,
+        String sound
+    ) throws JsonProcessingException {
+        return new SnsEnvelope(
+            "New notification",
+            buildFcmV1Message(title, alertBody, mobTransaction, channelId, sound)
+        );
+    }
+
+    private String buildFcmV1Message(
+        String title,
+        String alertBody,
+        MobTransaction mobTransaction,
+        String channelId,
+        String sound
+    ) throws JsonProcessingException {
+        ObjectNode root = mapper.createObjectNode();
+        ObjectNode fcmV1Message = root.putObject("fcmV1Message");
+        ObjectNode message = fcmV1Message.putObject("message");
+
+        ObjectNode notification = message.putObject("notification");
+        notification.put("title", title);
+        notification.put("body", alertBody);
+
+        ObjectNode data = message.putObject("data");
+        data.put("channel_id", channelId);
+        data.put("title", title);
+        data.put("body", mapper.writeValueAsString(mobTransaction));
+
+        ObjectNode android = message.putObject("android");
+        android.put("priority", "high");
+
+        ObjectNode androidNotification = android.putObject("notification");
+        androidNotification.put("channel_id", channelId);
+        androidNotification.put("title", title);
+        androidNotification.put("body", alertBody);
+        androidNotification.put("sound", toAndroidSound(sound));
+
+        ObjectNode apns = message.putObject("apns");
+
+        ObjectNode headers = apns.putObject("headers");
+        headers.put("apns-priority", "10");
+        headers.put("apns-push-type", "alert");
+
+        ObjectNode payload = apns.putObject("payload");
+        ObjectNode aps = payload.putObject("aps");
+
+        ObjectNode alert = aps.putObject("alert");
+        alert.put("title", title);
+        alert.put("body", alertBody);
+
+        aps.put("sound", toIosSound(sound));
+        aps.put("badge", 1);
+        aps.put("content-available", 1);
+
+        return mapper.writeValueAsString(root);
+    }
+
+    private String toAndroidSound(String sound) {
+        if (sound == null || sound.isBlank()) {
+            return "default";
+        }
+
+        return sound
+            .replace(".aiff", "")
+            .replace(".caf", "")
+            .replace(".wav", "");
+    }
+
+    private String toIosSound(String sound) {
+        if (sound == null || sound.isBlank()) {
+            return "default";
+        }
+
+        if (sound.endsWith(".aiff") || sound.endsWith(".caf") || sound.endsWith(".wav")) {
+            return sound;
+        }
+
+        return sound + ".aiff";
+    }
+}
